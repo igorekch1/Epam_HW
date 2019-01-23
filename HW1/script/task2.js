@@ -13,6 +13,7 @@ for (let x in roles) {
     let countRoles = textLines.split(`${roles[x]}`).length-1,
     step = 0;
 
+    
     for (let i = 0; i < countRoles; i ++) {
         let startRole, endRole;
         startRole = textLines.indexOf(`${roles[x]}`, step)
@@ -46,10 +47,11 @@ var play = {}
 for (let x in rolesInPlay) {
     //checking if the object contains such property
     if (play.hasOwnProperty(`${rolesInPlay[x]}`)) {
-        play[`${rolesInPlay[x]}`].push(roleText[x])
+        play[`${rolesInPlay[x]}`].push(`${Number(x)+1}) ` + roleText[x])
     } else {
-        Object.assign(play, { [rolesInPlay[x]] : [roleText[x]] })
+        Object.assign(play, { [rolesInPlay[x]] : [`${Number(x)+1}) ` + roleText[x]] })
     }
+    console.log(x)
 }
 
 //Display object
