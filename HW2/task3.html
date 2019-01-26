@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HW3</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        caption {
+            font-size: 20px;
+            font-weight: 600;
+            border: 1px solid #000000;
+            border-bottom: none;
+            padding: 10px 0;
+        }
+
+        th {
+            border: 1px solid #000;
+            padding: 10px 20px;
+        }
+
+        td {
+            padding: 10px 15px 9px 6px;   
+            border: 1px solid #000000;
+            /* border-top: none; */
+        }
+
+        button {
+            margin: 10px 10px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="radio" id="minToMax" name="sortRadio" value="minToMax">
+    <label for="minToMax">Min to max</label>
+    <br>
+    <input type="radio" id="maxToMin" name="sortRadio" value="maxToMin">
+    <label for="maxToMin">Max to min</label>
+    <br>
+    <button id = "btnPrice">Sort by price</button>
+    <button id = "btnReviews">Sort by rating reviews</button>
+    <table id="table"></table>
+
+    <script src="./script/task3.js"></script>
+</body>
+</html>

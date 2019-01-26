@@ -46,7 +46,7 @@ for (let x in endPoints) {
 var play = {}
 for (let x in rolesInPlay) {
     //checking if the object contains such property
-    if (play.hasOwnProperty(`${rolesInPlay[x]}`)) {
+    if (rolesInPlay[x] in play) {
         play[`${rolesInPlay[x]}`].push(`${Number(x)+1}) ` + roleText[x])
     } else {
         Object.assign(play, { [rolesInPlay[x]] : [`${Number(x)+1}) ` + roleText[x]] })
