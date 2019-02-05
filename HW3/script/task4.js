@@ -136,8 +136,9 @@ function showMustGoOn() {
         if (++timesRun == 10) clearInterval(interval)
 
         let randomValue = randomInteger(10,75);
+        let randomValueRect = randomInteger(10,50);
         figures.push(new Circle(randomValue+1,randomValue+1,randomValue));
-        figures.push(new Rectangle(randomInteger(10,50), randomInteger(10,50)));
+        figures.push(new Rectangle(randomValueRect, randomValueRect));
     },5000);
 
     // every 25ms updating scene
@@ -147,7 +148,8 @@ function showMustGoOn() {
 window.onload = () => {
     // adding two figures to be animated in order not to wait 5s to next figure rendering
     let randomValueStart = randomInteger(10,75);
+    let randomValueRect = randomInteger(10,50);
     figures.push(new Circle(randomValueStart+1,randomValueStart+1,randomValueStart));
-    figures.push(new Rectangle(randomInteger(10,50), randomInteger(10,50)));
+    figures.push(new Rectangle(randomValueRect,randomValueRect));
     showMustGoOn();
 }
