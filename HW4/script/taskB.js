@@ -25,7 +25,7 @@ let pizzaMenu = [{
             imgSrc: "./images/pizza4.png"
         }, {
             name: "\"Курица с ананасом\"",
-            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Томатный соус", "Ананас", "МайонезОливки"],
+            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Томатный соус", "Ананас", "Майонез", "Оливки"],
             calories: "1330",
             price: "52.00",
             imgSrc: "./images/pizza5.png"
@@ -118,7 +118,10 @@ let pizzaMenu = [{
     pizza_container = document.querySelector(".pizza-container"),
     selectedName = "",
     ascRadio,
-    descRadio;
+    descRadio,
+    modal,
+    textArea,
+    currentConsist;
 
 let staticArray = Array.from(pizzaMenu);
 
@@ -203,10 +206,21 @@ function createGrid(arr, ingredientItem) {
     ingredientsArr.map(x => {
         createElem("option", "", filterSelect, x);
     });
+
+    // Creating Modal
+    modal = createElem("div","modal", wrapper);
+    let modal_content = createElem("div","modal-content", modal);
+    createElem("span", "close", modal_content, "&times");
+    createElem("div", "modal-title", modal_content, "<strong>Состав:</strong>");
+    textArea = createElem("textarea", "edit-field", modal_content);
+    textArea.setAttribute("placeholder", "Edit here..."); 
+    textArea.setAttribute("cols", "30"); 
+    textArea.setAttribute("rows", "5"); 
+
     let pizza_cards = createElem("div", "pizza-cards", pizza_container);
     for (let pizza of arr) {
         //check if pizza contains such an ingredient, true --> display
-        if (arguments.length === 1 || pizza.ingredients.includes(ingredientItem)) {
+        if (pizza.ingredients.includes(ingredientItem) || ingredientItem === null) {
             let pizza_flipper = createElem("div", "pizza-flipper", pizza_cards);
             let pizza_card = createElem("div", "pizza-card", pizza_flipper);
             let img_wrapper = createElem("div", "img-wrapper", pizza_card);
@@ -215,9 +229,12 @@ function createGrid(arr, ingredientItem) {
             let content_wrapper = createElem("div", "content-wrapper", pizza_card);
 
             createElem("div", "name", content_wrapper, `Название: ${pizza.name}`);
-            createElem("div", "ingredients", content_wrapper, `<strong>Состав:</strong> ${pizza.ingredients.join(", ")}`);
+            createElem("span", "", content_wrapper,"<strong>Состав:</strong> ");
+            createElem("div", "ingredients", content_wrapper, `${pizza.ingredients.join(", ")}`);
+            createElem("button", "edit-ing", content_wrapper, "Изменить состав");
             createElem("div", "calories", content_wrapper, `<strong>Калории:</strong> ${pizza.calories}`);
             createElem("div", "price", content_wrapper, `<strong>Цена:</strong> ${pizza.price} грн`);
+            
         } else continue;
     }
 };
@@ -273,7 +290,7 @@ function createList(arr) {
 wrapper.addEventListener("click", (e) => {
     let target = e.target;
     if (target.id === "asGrid") {
-        createGrid(staticArray);
+        createGrid(staticArray, null);
     } else if (target.id === "asList") {
         createList(staticArray);
     } else if (target.className === "btn-sort") {
@@ -283,6 +300,28 @@ wrapper.addEventListener("click", (e) => {
         ) : (
             alert("Выберите характеристику, по которой желаете сортировать(Цена/Название)")
         );
+    } else if (target.className === "edit-ing") {
+        modal.style.display = "block";
+        textArea.value = target.previousElementSibling.innerText;
+        
+    } else if (target.className === "close") {
+        modal.style.display = "none";
+    } else if (target.className === "modal") {
+        modal.style.display = "none";
+    } else if (target.className === "edit-field" ||
+        target.className === "modal-content") { 
+        e.stopPropagation();
+    } else {
+        // checking if our target is not "pizza-flipper" -> up to the parentnode
+        while (!target.classList.contains("pizza-flipper")) {
+            target = target.parentNode;
+        }
+
+        if (!target.classList.contains("clicked")) {
+            target.classList.add("clicked");
+        } else {
+            target.classList.remove("clicked");
+        }
     }
 });
 
@@ -294,5 +333,11 @@ wrapper.addEventListener("change", (e) => {
     } else if (target.className === "sort-select" &&
         target.tagName === "SELECT") {
         selectedName = target.options[target.selectedIndex].value;
-    }
+    } else if (target.tagName === "TEXTAREA" &&
+        target.className === "edit-field") {
+            // e.stopImmediatePropagation();
+            currentConsist = target.value;
+            // createGrid(pizzaMenu, null, currentConsist);
+            console.log("consist - ",currentConsist)
+        }
 })
