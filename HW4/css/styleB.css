@@ -1,0 +1,82 @@
+.pizza-container {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.pizza-cards {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.pizza-flipper {
+    perspective: 1000;
+    padding: 10px 15px 20px;
+    margin-top: 10px;
+    border: 2px solid #00ff55;
+}
+
+.pizza-flipper:hover .pizza-card{
+    transform: rotateY(180deg);
+}
+    
+.pizza-flipper, .content-wrapper, .img-wrapper {
+    width: 250px;
+    height: 280px;
+}
+
+.img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pizza-card {
+    padding: 15px 15px 20px; 
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.content-wrapper, .img-wrapper {
+    backface-visibility: hidden;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.content-wrapper {
+    z-index: 2;
+}
+
+.img-wrapper {
+    transform: rotateY(180deg);
+}
+
+.content-wrapper > div {
+    line-height: 32px;
+}
+
+.content-wrapper .name {
+    font-weight: 700;
+}
+
+.pizza-card .ingredients {
+    word-wrap: break-word;
+}
+
+select {
+    display: block;
+    margin: 10px 0;
+}
+
+button {
+    display: block;
+    padding: 5px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+}

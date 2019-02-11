@@ -1,8 +1,3 @@
-button {
-    padding: 5px 20px;
-    font-size: 16px;
-}
-
 .pizza-container {
     display: flex;
 }
@@ -59,4 +54,5 @@ button {
     display: block;
     padding: 5px 20px;
     margin: 10px 0;
+    font-size: 16px;
 }
