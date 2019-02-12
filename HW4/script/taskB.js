@@ -2,112 +2,94 @@ let pizzaMenu = [{
             name: "\"Фитнес\"",
             ingredients: ["Курица", "Сыр \"Чеддер\"", "Перец болгарский", "Помидор", "Укроп", "Томатный соус", "Сладкий соус чили"],
             calories: "1033",
-            price: "56.00",
             imgSrc: "./images/pizza1.png"
         }, {
             name: "\"Баварская\"",
-            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Огурец соленый", "Помидор", "Оливки", "Кетчуп", "Специи итальянские"],
+            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Огурцы соленые", "Помидор", "Оливки", "Кетчуп", "Специи итальянские"],
             calories: "1500",
-            price: "60.00",
             imgSrc: "./images/pizza2.png"
         }, {
             name: "\"Фирменная\"",
             ingredients: ["Курица", "Сыр \"Чеддер\"", "Ветчина", "Майонез", "Грибы", "Томатный соус", "Маслины"],
             calories: "1279",
-            price: "54.00",
             imgSrc: "./images/pizza3.png"
         }, {
             name: "\"Салями\"",
-            ingredients: ["Салями", "Сыр \"Чеддер\"", "Томатный соус с чесноком", "Огурцы соленые", "Укроп", "Майонез"],
+            ingredients: ["Салями", "Сыр \"Чеддер\"", "Томатный соус", "Огурцы соленые", "Укроп", "Майонез"],
             calories: "1450",
-            price: "54.00",
             imgSrc: "./images/pizza4.png"
         }, {
             name: "\"Курица с ананасом\"",
             ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Томатный соус", "Ананас", "Майонез", "Оливки"],
             calories: "1330",
-            price: "52.00",
             imgSrc: "./images/pizza5.png"
         }, {
             name: "\"Курица с грибами\"",
             ingredients: ["Курица", "Сыр \"Чеддер\"", "Грибы", "Майонез", "Грибы", "Томатный соус"],
             calories: "1429",
-            price: "54.00",
             imgSrc: "./images/pizza6.png"
         },
         {
             name: "\"С грибами\"",
             ingredients: ["Грибы", "Сыр \"Чеддер\"", "Томатный соус", "Майонез"],
             calories: "970",
-            price: "44.00",
             imgSrc: "./images/pizza7.png"
         }, {
             name: "\"С ветчиной\"",
             ingredients: ["Ветчина", "Сыр \"Чеддер\"", "Майонез", "Томатный соус"],
             calories: "1320",
-            price: "56.00",
             imgSrc: "./images/pizza8.png"
         }, {
             name: "\"Охотничья\"",
             ingredients: ["Охотничьи колбаски", "Сыр моцарелла", "Шампиньоны", "Сладкий лук", "Соус BBQ"],
             calories: "1679",
-            price: "72.00",
             imgSrc: "./images/pizza9.png"
         },
         {
             name: "\"Маргарита\"",
             ingredients: ["Томаты", "Сыр моцарелла", "Базилик", "Соус Pomodoro", "Орегано"],
             calories: "840",
-            price: "42.00",
             imgSrc: "./images/pizza10.png"
         }, {
             name: "\"Кальцоне\"",
-            ingredients: ["Ветчина", "Шампиньйоны", "Сыр моцарелла", "Томаты", "Орегано"],
+            ingredients: ["Ветчина", "Шампиньоны", "Сыр моцарелла", "Томаты", "Орегано"],
             calories: "1300",
-            price: "62.00",
             imgSrc: "./images/pizza11.png"
         }, {
             name: "\"Берлускони\"",
             ingredients: ["Ветчина", "Сыр \"Чеддер\"", "Базилик", "Перец болгарский", "Помидор", "Томатный соус", "Оливки"],
             calories: "1129",
-            price: "54.00",
             imgSrc: "./images/pizza12.png"
         },
         {
             name: "\"Американо\"",
             ingredients: ["Ветчина", "Сыр \"Чеддер\"", "Перец болгарский", "Базилик", "Майонез", "Томатный соус"],
             calories: "1150",
-            price: "57.00",
             imgSrc: "./images/pizza13.png"
         }, {
             name: "\"Четыре сыра\"",
-            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Огурец соленый", "Помидор", "Оливки"],
+            ingredients: ["Колбаска сырокопченная", "Сыр \"Чеддер\"", "Огурцы соленые", "Помидор", "Оливки"],
             calories: "1200",
-            price: "58.00",
             imgSrc: "./images/pizza14.png"
         }, {
             name: "\"Гурмео\"",
             ingredients: ["Курица", "Сыр \"Чеддер\"", "Ветчина", "Майонез", "Грибы", "Томатный соус", "Маслины"],
             calories: "1100",
-            price: "50.00",
             imgSrc: "./images/pizza15.png"
         }, {
             name: "\"Полло\"",
-            ingredients: ["Салями Пепперони", "Сыр \"Чеддер\"", "Перец болгарский", "Помидор", "Укроп", "Томатный соус", "Сладкий соус чили"],
+            ingredients: ["Салями", "Сыр \"Чеддер\"", "Перец болгарский", "Помидор", "Укроп", "Томатный соус", "Сладкий соус чили"],
             calories: "1000",
-            price: "58.00",
             imgSrc: "./images/pizza16.png"
         }, {
             name: "\"Карбонара\"",
             ingredients: ["Ветчина", "Сыр \"Чеддер\"", "Маслины", "Кетчуп", "Специи итальянские"],
             calories: "1600",
-            price: "64.00",
             imgSrc: "./images/pizza17.png"
         }, {
             name: "\"Пепперони\"",
-            ingredients: ["Салями Пепперони", "Сыр моцарелла", "Огурец соленый", "Соус Pomodoro"],
+            ingredients: ["Салями", "Сыр моцарелла", "Огурцы соленые", "Соус Pomodoro"],
             calories: "1800",
-            price: "70.00",
             imgSrc: "./images/pizza18.png"
         }
     ],
@@ -126,108 +108,125 @@ let pizzaMenu = [{
 
 let allIngredients = {
     "Курица": {
-        price: "25",
-        calories: "20"
+        price: 25,
+        calories: 20
     },
     "Сыр моцарелла": {
-        price: "15",
-        calories: "30"
+        price: 15,
+        calories: 30
     },
     "Огурец соленый": {
-        price: "5",
-        calories: "15"
+        price: 5,
+        calories: 15
     },
     "Соус Pomodoro": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Ветчина": {
-        price: "25",
-        calories: "30"
+        price: 25,
+        calories: 30
     },
     "Сыр \"Чеддер\"": {
-        price: "15",
-        calories: "40"
+        price: 15,
+        calories: 40
     },
     "Перец болгарский": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Помидор": {
-        price: "5",
-        calories: "15"
+        price: 5,
+        calories: 15
     },
     "Укроп": {
-        price: "5",
-        calories: "5"
+        price: 5,
+        calories: 5
     },
     "Томатный соус": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Сладкий соус чили": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Маслины": {
-        price: "15",
-        calories: "20"
+        price: 15,
+        calories: 20
     },
     "Кетчуп": {
-        price: "15",
-        calories: "20"
+        price: 15,
+        calories: 20
     },
     "Колбаска сырокопченная": {
-        price: "30",
-        calories: "50"
+        price: 30,
+        calories: 50
     },
     "Оливки": {
-        price: "10",
-        calories: "30"
+        price: 10,
+        calories: 30
     },
     "Базилик": {
-        price: "5",
-        calories: "20"
+        price: 5,
+        calories: 20
     },
     "Укроп": {
-        price: "5",
-        calories: "20"
+        price: 5,
+        calories: 20
     },
     "Майонез": {
-        price: "5",
-        calories: "30"
+        price: 5,
+        calories: 30
     },
-    "Шампиньйоны": {
-        price: "15",
-        calories: "50"
+    "Шампиньоны": {
+        price: 15,
+        calories: 50
     },
     "Охотничьи колбаски": {
-        price: "20",
-        calories: "60"
+        price: 20,
+        calories: 60
     },
     "Сладкий лук": {
-        price: "5",
-        calories: "20"
+        price: 5,
+        calories: 20
     },
     "Соус Pomodoro": {
-        price: "5",
-        calories: "20"
+        price: 5,
+        calories: 20
     },
     "Томаты": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Орегано": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Соус BBQ": {
-        price: "5",
-        calories: "10"
+        price: 5,
+        calories: 10
     },
     "Ананас": {
-        price: "5",
-        calories: "20"
+        price: 5,
+        calories: 20
+    }, 
+    "Специи итальянские" : {
+        price : 5,
+        calories: 20
+    }, 
+    "Грибы" : {
+        price : 5,
+        calories: 20
+    }
+    , 
+    "Салями" : {
+        price : 25,
+        calories: 60
+    },
+    "Огурцы соленые": {
+        price: 10,
+        calories : 20
     }
 };
 
@@ -290,12 +289,12 @@ function checkRadio() {
 function mySort(arr, by) {
     function compareItems(prev, next) {
         if (by === "price") {
-            return prev.price.split(".")[0] - next.price.split(".")[0];
+            return prev.price - next.price;
         } else if (by === "name") {
-            if (prev.name.toLowerCase() > next.name.toLowerCase()) {
+            if (prev.name.toLowerCase().split(" ").join("") > next.name.toLowerCase().split(" ").join("")) {
                 return 1;
             }
-            if (prev.name.toLowerCase() < next.name.toLowerCase()) {
+            if (prev.name.toLowerCase().split(" ").join("") < next.name.toLowerCase().split(" ").join("")) {
                 return -1;
             }
             // if prev.name equals next.name
@@ -306,6 +305,31 @@ function mySort(arr, by) {
     checkRadio() === "ascending" ? arr.sort(compareItems) :
         checkRadio() === "descending" ? arr.sort(compareItems).reverse() :
         alert("Выберите вид сортировки (по убыванию / по возрастанию)")
+}
+
+function calcData(condition, data, name){
+    let sum = 0;
+    if (condition === "price") {
+        data.map(x => {
+            sum += allIngredients[x].price;
+        });
+        // creating a property price if doesn't exist
+        if (name !== undefined) {
+            let currentObj = pizzaMenu[`${find(pizzaMenu,name)}`];
+            currentObj["price"] = sum;
+        }
+    } else if (condition === "calories") {
+        data.map(x => {
+            sum += allIngredients[x].calories;
+        });
+        // creating a property price if doesn't exist
+        if (name !== undefined) {
+            let currentObj = pizzaMenu[`${find(pizzaMenu,name)}`];
+            currentObj["calories"] = sum;
+        }
+    }
+    
+    return sum;
 }
 
 function createGrid(arr, ingredientItem) {
@@ -351,10 +375,10 @@ function createGrid(arr, ingredientItem) {
             createElem("div", "ingredients", content_wrapper, `${pizza.ingredients.join(", ")}`);
             createElem("button", "edit-ing", content_wrapper, "Изменить состав");
             createElem("span", "", content_wrapper, "<strong>Калории:</strong> ");
-            createElem("div", "calories", content_wrapper, `${pizza.calories}`);
+            createElem("div", "calories", content_wrapper, `${calcData("calories", pizza.ingredients, pizza.name)}`);
             createElem("br", "new-line", content_wrapper);
             createElem("span", "", content_wrapper, "<strong>Цена:</strong> ");
-            createElem("div", "price", content_wrapper, `${pizza.price}`);
+            createElem("div", "price", content_wrapper, `${calcData("price", pizza.ingredients, pizza.name)}`);
             createElem("span", "", content_wrapper, " грн");
 
         } else continue;
@@ -409,7 +433,7 @@ function createList(arr) {
     `;
 
     for (let pizza of arr) {
-        createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${pizza.price} грн`);
+        createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${calcData("price", pizza.ingredients)} грн`);
     }
 };
 
@@ -477,8 +501,8 @@ wrapper.addEventListener("change", (e) => {
         target.className === "edit-field") {
             console.log(currentCalories.innerHTML," ",currentPrice.innerHTML);
             let tmpArr, targArr;
-            //check if the ingredient exists 
-            findIngred(target.value) === true ? (
+            // check if the ingredient exists 
+            findIngred(target.value) ? (
                 // clearing the array in order to push a new one
                 tmpArr = staticArray[find(staticArray, currentName.innerHTML)].ingredients,
                 tmpArr.length = 0,
@@ -490,3 +514,6 @@ wrapper.addEventListener("change", (e) => {
             );   
     }
 });
+
+// TODO : 1) condition
+// 2) immediate recalc for calories and price
