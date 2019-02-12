@@ -16,8 +16,7 @@ let pizzaMenu = [{
             calories: "1279",
             price: "54.00",
             imgSrc: "./images/pizza3.png"
-        },
-        {
+        }, {
             name: "\"Салями\"",
             ingredients: ["Салями", "Сыр \"Чеддер\"", "Томатный соус с чесноком", "Огурцы соленые", "Укроп", "Майонез"],
             calories: "1450",
@@ -50,7 +49,7 @@ let pizzaMenu = [{
             imgSrc: "./images/pizza8.png"
         }, {
             name: "\"Охотничья\"",
-            ingredients: ["Охотничьи колбаски", "Сыр моцарелла", "Шампиньоны", "сладкий лук", "соус BBQ"],
+            ingredients: ["Охотничьи колбаски", "Сыр моцарелла", "Шампиньоны", "Сладкий лук", "Соус BBQ"],
             calories: "1679",
             price: "72.00",
             imgSrc: "./images/pizza9.png"
@@ -92,8 +91,7 @@ let pizzaMenu = [{
             calories: "1100",
             price: "50.00",
             imgSrc: "./images/pizza15.png"
-        },
-        {
+        }, {
             name: "\"Полло\"",
             ingredients: ["Салями Пепперони", "Сыр \"Чеддер\"", "Перец болгарский", "Помидор", "Укроп", "Томатный соус", "Сладкий соус чили"],
             calories: "1000",
@@ -121,7 +119,117 @@ let pizzaMenu = [{
     descRadio,
     modal,
     textArea,
-    currentConsist;
+    currentName,
+    currentConsist,
+    currentPrice,
+    currentCalories;
+
+let allIngredients = {
+    "Курица": {
+        price: "25",
+        calories: "20"
+    },
+    "Сыр моцарелла": {
+        price: "15",
+        calories: "30"
+    },
+    "Огурец соленый": {
+        price: "5",
+        calories: "15"
+    },
+    "Соус Pomodoro": {
+        price: "5",
+        calories: "10"
+    },
+    "Ветчина": {
+        price: "25",
+        calories: "30"
+    },
+    "Сыр \"Чеддер\"": {
+        price: "15",
+        calories: "40"
+    },
+    "Перец болгарский": {
+        price: "5",
+        calories: "10"
+    },
+    "Помидор": {
+        price: "5",
+        calories: "15"
+    },
+    "Укроп": {
+        price: "5",
+        calories: "5"
+    },
+    "Томатный соус": {
+        price: "5",
+        calories: "10"
+    },
+    "Сладкий соус чили": {
+        price: "5",
+        calories: "10"
+    },
+    "Маслины": {
+        price: "15",
+        calories: "20"
+    },
+    "Кетчуп": {
+        price: "15",
+        calories: "20"
+    },
+    "Колбаска сырокопченная": {
+        price: "30",
+        calories: "50"
+    },
+    "Оливки": {
+        price: "10",
+        calories: "30"
+    },
+    "Базилик": {
+        price: "5",
+        calories: "20"
+    },
+    "Укроп": {
+        price: "5",
+        calories: "20"
+    },
+    "Майонез": {
+        price: "5",
+        calories: "30"
+    },
+    "Шампиньйоны": {
+        price: "15",
+        calories: "50"
+    },
+    "Охотничьи колбаски": {
+        price: "20",
+        calories: "60"
+    },
+    "Сладкий лук": {
+        price: "5",
+        calories: "20"
+    },
+    "Соус Pomodoro": {
+        price: "5",
+        calories: "20"
+    },
+    "Томаты": {
+        price: "5",
+        calories: "10"
+    },
+    "Орегано": {
+        price: "5",
+        calories: "10"
+    },
+    "Соус BBQ": {
+        price: "5",
+        calories: "10"
+    },
+    "Ананас": {
+        price: "5",
+        calories: "20"
+    }
+};
 
 let staticArray = Array.from(pizzaMenu);
 
@@ -156,6 +264,14 @@ function destroyWrapper() {
         pizza_container.removeChild(pizza_container.firstChild)
     }
 };
+
+function find(array, value) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i].name == value) return i;
+    }
+  
+    return -1;
+  }
 
 //Choosing an option - ascending or descending
 function checkRadio() {
@@ -208,14 +324,14 @@ function createGrid(arr, ingredientItem) {
     });
 
     // Creating Modal
-    modal = createElem("div","modal", wrapper);
-    let modal_content = createElem("div","modal-content", modal);
+    modal = createElem("div", "modal", wrapper);
+    let modal_content = createElem("div", "modal-content", modal);
     createElem("span", "close", modal_content, "&times");
     createElem("div", "modal-title", modal_content, "<strong>Состав:</strong>");
     textArea = createElem("textarea", "edit-field", modal_content);
-    textArea.setAttribute("placeholder", "Edit here..."); 
-    textArea.setAttribute("cols", "30"); 
-    textArea.setAttribute("rows", "5"); 
+    textArea.setAttribute("placeholder", "Edit here...");
+    textArea.setAttribute("cols", "30");
+    textArea.setAttribute("rows", "5");
 
     let pizza_cards = createElem("div", "pizza-cards", pizza_container);
     for (let pizza of arr) {
@@ -228,13 +344,19 @@ function createGrid(arr, ingredientItem) {
             img.setAttribute("src", `${pizza.imgSrc}`);
             let content_wrapper = createElem("div", "content-wrapper", pizza_card);
 
-            createElem("div", "name", content_wrapper, `Название: ${pizza.name}`);
-            createElem("span", "", content_wrapper,"<strong>Состав:</strong> ");
+            createElem("span", "", content_wrapper, "<strong>Название: </strong> ");
+            createElem("div", "name", content_wrapper, `${pizza.name}`);
+            createElem("br", "new-line", content_wrapper);
+            createElem("span", "", content_wrapper, "<strong>Состав:</strong> ");
             createElem("div", "ingredients", content_wrapper, `${pizza.ingredients.join(", ")}`);
             createElem("button", "edit-ing", content_wrapper, "Изменить состав");
-            createElem("div", "calories", content_wrapper, `<strong>Калории:</strong> ${pizza.calories}`);
-            createElem("div", "price", content_wrapper, `<strong>Цена:</strong> ${pizza.price} грн`);
-            
+            createElem("span", "", content_wrapper, "<strong>Калории:</strong> ");
+            createElem("div", "calories", content_wrapper, `${pizza.calories}`);
+            createElem("br", "new-line", content_wrapper);
+            createElem("span", "", content_wrapper, "<strong>Цена:</strong> ");
+            createElem("div", "price", content_wrapper, `${pizza.price}`);
+            createElem("span", "", content_wrapper, " грн");
+
         } else continue;
     }
 };
@@ -281,11 +403,24 @@ function createList(arr) {
 
     //creating list of pizzas
     let pizza_list = createElem("ul", "", pizza_container);
+    pizza_list.style = `
+        list-style-image: url(images/marker.png);
+        margin-left: 10px;    
+    `;
 
     for (let pizza of arr) {
         createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${pizza.price} грн`);
     }
 };
+
+function findIngred(ingred) {
+    let tmpIng = ingred.trim().split(", ");
+    for (let x of tmpIng) {
+        if (!allIngredients.hasOwnProperty(x)) 
+            return false;
+    }
+    return true;
+}
 
 wrapper.addEventListener("click", (e) => {
     let target = e.target;
@@ -303,15 +438,20 @@ wrapper.addEventListener("click", (e) => {
     } else if (target.className === "edit-ing") {
         modal.style.display = "block";
         textArea.value = target.previousElementSibling.innerText;
-        
+        currentConsist = target.parentNode.querySelector(".ingredients");
+        currentCalories = target.parentNode.querySelector(".calories");
+        currentPrice = target.parentNode.querySelector(".price");
+        currentName = target.parentNode.querySelector(".name")
+        ;
     } else if (target.className === "close") {
         modal.style.display = "none";
     } else if (target.className === "modal") {
         modal.style.display = "none";
     } else if (target.className === "edit-field" ||
-        target.className === "modal-content") { 
-        e.stopPropagation();
+        target.className === "modal-content") {
+        // e.stopPropagation();
     } else {
+        // TODO: CREATE CONDITION
         // checking if our target is not "pizza-flipper" -> up to the parentnode
         while (!target.classList.contains("pizza-flipper")) {
             target = target.parentNode;
@@ -329,15 +469,24 @@ wrapper.addEventListener("change", (e) => {
     let target = e.target;
     if (target.className === "filter-select" &&
         target.tagName === "SELECT") {
-        createGrid(staticArray, target.value);
+            createGrid(staticArray, target.value);
     } else if (target.className === "sort-select" &&
         target.tagName === "SELECT") {
-        selectedName = target.options[target.selectedIndex].value;
+            selectedName = target.options[target.selectedIndex].value;
     } else if (target.tagName === "TEXTAREA" &&
         target.className === "edit-field") {
-            // e.stopImmediatePropagation();
-            currentConsist = target.value;
-            // createGrid(pizzaMenu, null, currentConsist);
-            console.log("consist - ",currentConsist)
-        }
-})
+            console.log(currentCalories.innerHTML," ",currentPrice.innerHTML);
+            let tmpArr, targArr;
+            //check if the ingredient exists 
+            findIngred(target.value) === true ? (
+                // clearing the array in order to push a new one
+                tmpArr = staticArray[find(staticArray, currentName.innerHTML)].ingredients,
+                tmpArr.length = 0,
+                targArr = target.value.trim().split(", "),
+                tmpArr.push(...targArr),
+                currentConsist.innerHTML = target.value
+            ) : (
+                alert("Такого ингредиент нет в меню !!!")
+            );   
+    }
+});

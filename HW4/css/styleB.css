@@ -68,6 +68,10 @@
     font-weight: 700;
 }
 
+.content-wrapper .name, .calories, .price {
+    display: inline-block;
+}
+
 .pizza-card .ingredients {
     word-wrap: break-word;
 }
@@ -94,10 +98,6 @@ button.edit-ing {
 
 button.edit-ing:hover {
     cursor: pointer;
-}
-
-ul {
-    list-style-image: url(images/marker.png);
 }
 
 /* ----- MODAL ----- */
