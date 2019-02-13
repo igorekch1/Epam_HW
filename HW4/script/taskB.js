@@ -285,7 +285,6 @@ function checkRadio() {
     }
 }
 
-
 function mySort(arr, by) {
     function compareItems(prev, next) {
         if (by === "price") {
