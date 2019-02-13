@@ -109,107 +109,107 @@ let pizzaMenu = [{
 let allIngredients = {
     "Курица": {
         price: 25,
-        calories: 20
+        calories: 400
     },
     "Сыр моцарелла": {
         price: 15,
-        calories: 30
+        calories: 300
     },
     "Огурец соленый": {
         price: 5,
-        calories: 15
+        calories: 100
     },
     "Соус Pomodoro": {
         price: 5,
-        calories: 10
+        calories: 100
     },
     "Ветчина": {
         price: 25,
-        calories: 30
+        calories: 450
     },
     "Сыр \"Чеддер\"": {
         price: 15,
-        calories: 40
+        calories: 250
     },
     "Перец болгарский": {
         price: 5,
-        calories: 10
+        calories: 120
     },
     "Помидор": {
         price: 5,
-        calories: 15
+        calories: 150
     },
     "Укроп": {
         price: 5,
-        calories: 5
+        calories: 50
     },
     "Томатный соус": {
         price: 5,
-        calories: 10
+        calories: 100
     },
     "Сладкий соус чили": {
         price: 5,
-        calories: 10
+        calories: 130
     },
     "Маслины": {
         price: 15,
-        calories: 20
+        calories: 200
     },
     "Кетчуп": {
         price: 15,
-        calories: 20
+        calories: 140
     },
     "Колбаска сырокопченная": {
         price: 30,
-        calories: 50
+        calories: 400
     },
     "Оливки": {
         price: 10,
-        calories: 30
+        calories: 170
     },
     "Базилик": {
         price: 5,
-        calories: 20
+        calories: 110
     },
     "Укроп": {
         price: 5,
-        calories: 20
+        calories: 100
     },
     "Майонез": {
         price: 5,
-        calories: 30
+        calories: 200
     },
     "Шампиньоны": {
         price: 15,
-        calories: 50
+        calories: 190
     },
     "Охотничьи колбаски": {
         price: 20,
-        calories: 60
+        calories: 420
     },
     "Сладкий лук": {
         price: 5,
-        calories: 20
+        calories: 130
     },
     "Соус Pomodoro": {
         price: 5,
-        calories: 20
+        calories: 110
     },
     "Томаты": {
         price: 5,
-        calories: 10
+        calories: 100
     },
     "Орегано": {
         price: 5,
-        calories: 10
+        calories: 100
     },
     "Соус BBQ": {
         price: 5,
-        calories: 10
+        calories: 120
     },
     "Ананас": {
         price: 5,
-        calories: 20
+        calories: 130
     }, 
     "Специи итальянские" : {
         price : 5,
@@ -302,6 +302,7 @@ function mySort(arr, by) {
         }
 
     }
+
     checkRadio() === "ascending" ? arr.sort(compareItems) :
         checkRadio() === "descending" ? arr.sort(compareItems).reverse() :
         alert("Выберите вид сортировки (по убыванию / по возрастанию)")
@@ -340,7 +341,7 @@ function createGrid(arr, ingredientItem) {
 
     // filter button for ingredients
     let filterWrapper = createElem("div", "filter-wrapper", pizza_container);
-    let filterTitle = createElem("div", "filter-title", filterWrapper, "<strong>Фильтровать по одному из ингридиентов:</strong>");
+    createElem("div", "filter-title", filterWrapper, "<strong>Фильтровать по одному из ингридиентов:</strong>");
     let filterSelect = createElem("select", "filter-select", filterWrapper);
     filterSelect.setAttribute("size", ingredientsArr.length);
     ingredientsArr.map(x => {
@@ -433,7 +434,7 @@ function createList(arr) {
     `;
 
     for (let pizza of arr) {
-        createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${calcData("price", pizza.ingredients)} грн`);
+        createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${calcData("price", pizza.ingredients, pizza.name)} грн`);
     }
 };
 
@@ -473,12 +474,14 @@ wrapper.addEventListener("click", (e) => {
         modal.style.display = "none";
     } else if (target.className === "edit-field" ||
         target.className === "modal-content") {
-        // e.stopPropagation();
     } else {
-        // TODO: CREATE CONDITION
         // checking if our target is not "pizza-flipper" -> up to the parentnode
         while (!target.classList.contains("pizza-flipper")) {
             target = target.parentNode;
+            //check if our target is not in pizza-card
+            if (target.tagName === "BODY") {
+                return false;
+            }
         }
 
         if (!target.classList.contains("clicked")) {
@@ -486,6 +489,7 @@ wrapper.addEventListener("click", (e) => {
         } else {
             target.classList.remove("clicked");
         }
+         
     }
 });
 
@@ -499,7 +503,6 @@ wrapper.addEventListener("change", (e) => {
             selectedName = target.options[target.selectedIndex].value;
     } else if (target.tagName === "TEXTAREA" &&
         target.className === "edit-field") {
-            console.log(currentCalories.innerHTML," ",currentPrice.innerHTML);
             let tmpArr, targArr;
             // check if the ingredient exists 
             findIngred(target.value) ? (
@@ -511,9 +514,8 @@ wrapper.addEventListener("change", (e) => {
                 currentConsist.innerHTML = target.value
             ) : (
                 alert("Такого ингредиент нет в меню !!!")
-            );   
+            ); 
+            currentPrice.innerHTML = calcData("price", currentConsist.innerHTML.split(", "));
+            currentCalories.innerHTML = calcData("calories", currentConsist.innerHTML.split(", "));
     }
 });
-
-// TODO : 1) condition
-// 2) immediate recalc for calories and price

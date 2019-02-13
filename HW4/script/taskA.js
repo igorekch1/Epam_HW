@@ -262,6 +262,10 @@ function createList(arr) {
 
     //creating list of pizzas
     let pizza_list = createElem("ul", "", pizza_container);
+    pizza_list.style = `
+        list-style-image: url(images/marker.png);
+        margin-left: 10px;    
+    `;
 
     for (let pizza of arr) {
         createElem("li", "", pizza_list, `<strong>${pizza.name}</strong>, ${pizza.price} грн`);
