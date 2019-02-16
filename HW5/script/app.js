@@ -3,6 +3,8 @@ let ingredientsArr = [],
     pizza_container = document.querySelector(".pizza-container"),
     counter = document.querySelector(".counter"),
     sum = document.querySelector(".total-sum-number"),
+    icon = document.querySelector(".basket-container"),
+    dropdown = document.querySelector(".dropdown-content"),
     selectedName = "",
     ascRadio,
     descRadio,
@@ -318,8 +320,7 @@ wrapper.addEventListener("click", (e) => {
         // saving pizza in localstorage
         localStorage.setItem(`order_${++number}`, JSON.stringify(pizza));
         // changing counter value on the basket
-        let newCounter = Number(counter.innerHTML) + 1;
-        counter.innerHTML = `${newCounter}`;
+        counter.innerHTML = `${Number(counter.innerHTML) + 1}`;
         // create block of order in the basket
         let basketElem = createElem("div",`basket-element_${number}`, myDropdown);
         createElem("span", "baskter-element-name", basketElem, name);
@@ -342,7 +343,11 @@ wrapper.addEventListener("click", (e) => {
         } else {
             alert("Заполните все поля !!!");
         }
-    } else {
+    } 
+        // TODO: EVENT ON WRAPPER, BUT IT'S IN HEADER
+        // else if (target.classList.contains("icon") || target.classList.contains("basket-container")) {
+        // console.log("yes") }
+         else {
         // checking if our target is not "pizza-flipper" -> up to the parentnode
         while (!target.classList.contains("pizza-flipper")) {
             target = target.parentNode;
@@ -394,24 +399,9 @@ wrapper.addEventListener("change", (e) => {
     }
 });
 
-window.onload = function loop() {
-    let s = '', p;
 
-    p = Math.floor(((Math.sin(Date.now()/300)+1)/2) * 100);
-
-    while (p >= 8) {
-        s += '█';
-        p -= 8;
-    }
-    s += ['⠀','▏','▎','▍','▌','▋','▊','▉'][p];
-
-    location.hash = s;
-    setTimeout(loop, 50);
-}
-
-let icon = document.querySelector(".basket-container")
-var dropdown = document.querySelector(".dropdown-content");
 icon.onclick = (e) => {
+    console.log(e.target.classList.contains("icon") || e.target.classList.contains("basket-container"))
     if (!dropdown.classList.contains("show")) {
         dropdown.classList.add("show")
     } else {
@@ -425,13 +415,12 @@ header.addEventListener("click", (e) => {
         // removing item from web page
         let itemToRemove = e.target.parentNode;
         itemToRemove.parentNode.removeChild(itemToRemove);
-        // removing item from localstorage
+        // removing item from localstorage and updating sum of the order on the web page
         let rmvFromStorage = itemToRemove.className.split("_")[1];
-        // updating sum of the order
         let removedItemPrice = JSON.parse(localStorage.getItem(`order_${rmvFromStorage}`)).price;
         localStorage.removeItem(`order_${rmvFromStorage}`);
-        // updating sum of the order
         sum.innerHTML = `${Number(sum.innerHTML) - Number(removedItemPrice)}`;
-        console.log(sum)
+        // changing counter value on the basket
+        counter.innerHTML = `${Number(counter.innerHTML) - 1}`;
     }
-})
+});

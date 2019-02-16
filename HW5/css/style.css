@@ -201,11 +201,45 @@ select {
     margin: 10px 0;
 }
 
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.button-wrapper button + button {
+    margin-left: 40px;
+}
+
 button {
     display: block;
     padding: 5px 20px;
     margin: 10px 0;
     font-size: 16px;
+    border: 1px solid #000;
+    background-color: #ffffff;
+}
+
+button#asGrid {
+    background: linear-gradient(135deg,#3494E6,rgb(199, 86, 143), #EC6EAD);
+}
+
+button#asList {
+    background: linear-gradient(45deg, #C6FFDD, #FBD786, #f7797d); 
+}
+
+button#asGrid,
+button#asList {
+    width: 200px;
+    padding: 15px 30px;
+    font-weight: 700;
+}
+
+button#asGrid:hover{
+    background: linear-gradient(-45deg,#3494E6, #EC6EAD);
+}
+
+button#asList:hover{
+    background: linear-gradient(225deg, #C6FFDD, #FBD786, #f7797d); 
 }
 
 button.edit-ing,
@@ -228,9 +262,7 @@ button.btn-create {
     margin: 10px auto;
 }
 
-button.edit-ing:hover,
-button.btn-buy:hover,
-button.btn-create:hover {
+button:hover{
     cursor: pointer;
 }
 
