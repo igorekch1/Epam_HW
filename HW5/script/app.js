@@ -2,6 +2,7 @@ let ingredientsArr = [],
     wrapper = document.querySelector("#main-wrapper"),
     pizza_container = document.querySelector(".pizza-container"),
     counter = document.querySelector(".counter"),
+    sum = document.querySelector(".total-sum-number"),
     selectedName = "",
     ascRadio,
     descRadio,
@@ -15,7 +16,7 @@ let ingredientsArr = [],
     newName,
     newIngredients = [],
     newPicture,
-    number = 1;
+    number = 0;
 
 let staticArray = Array.from(pizzaMenu);
 
@@ -306,6 +307,8 @@ wrapper.addEventListener("click", (e) => {
         let ingredients = target.parentNode.querySelector(".ingredients").textContent;
         let calories = target.parentNode.querySelector(".calories").textContent;
         let price = target.parentNode.querySelector(".price").textContent;
+        sum.innerHTML = `${Number(sum.innerHTML) + Number(price)}`;
+        console.log(sum)
         let pizza = {
             name,
             ingredients,
@@ -313,12 +316,12 @@ wrapper.addEventListener("click", (e) => {
             price
         }
         // saving pizza in localstorage
-        localStorage.setItem(`order_${number++}`, JSON.stringify(pizza));
+        localStorage.setItem(`order_${++number}`, JSON.stringify(pizza));
         // changing counter value on the basket
         let newCounter = Number(counter.innerHTML) + 1;
         counter.innerHTML = `${newCounter}`;
         // create block of order in the basket
-        let basketElem = createElem("a","basket-element", myDropdown);
+        let basketElem = createElem("div",`basket-element_${number}`, myDropdown);
         createElem("span", "baskter-element-name", basketElem, name);
         createElem("span", "baskter-element-price", basketElem, `${price} грн`);
         createElem("span", "remove-item", basketElem, "&times");
@@ -419,6 +422,16 @@ icon.onclick = (e) => {
 let header = document.querySelector("header");
 header.addEventListener("click", (e) => {
     if (e.target.className === "remove-item") {
-        console.log("deleted");
+        // removing item from web page
+        let itemToRemove = e.target.parentNode;
+        itemToRemove.parentNode.removeChild(itemToRemove);
+        // removing item from localstorage
+        let rmvFromStorage = itemToRemove.className.split("_")[1];
+        // updating sum of the order
+        let removedItemPrice = JSON.parse(localStorage.getItem(`order_${rmvFromStorage}`)).price;
+        localStorage.removeItem(`order_${rmvFromStorage}`);
+        // updating sum of the order
+        sum.innerHTML = `${Number(sum.innerHTML) - Number(removedItemPrice)}`;
+        console.log(sum)
     }
 })
