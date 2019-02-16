@@ -317,6 +317,12 @@ wrapper.addEventListener("click", (e) => {
         // changing counter value on the basket
         let newCounter = Number(counter.innerHTML) + 1;
         counter.innerHTML = `${newCounter}`;
+        // create block of order in the basket
+        let basketElem = createElem("a","basket-element", myDropdown);
+        createElem("span", "baskter-element-name", basketElem, name);
+        createElem("span", "baskter-element-price", basketElem, `${price} грн`);
+        createElem("span", "remove-item", basketElem, "&times");
+
     } else if (target.className === "btn-create") {
         e.preventDefault();
         // Creating a new pizza card and pushing to our arrays
@@ -384,3 +390,35 @@ wrapper.addEventListener("change", (e) => {
         newIngredients.push(target.options[target.selectedIndex].value);
     }
 });
+
+window.onload = function loop() {
+    let s = '', p;
+
+    p = Math.floor(((Math.sin(Date.now()/300)+1)/2) * 100);
+
+    while (p >= 8) {
+        s += '█';
+        p -= 8;
+    }
+    s += ['⠀','▏','▎','▍','▌','▋','▊','▉'][p];
+
+    location.hash = s;
+    setTimeout(loop, 50);
+}
+
+let icon = document.querySelector(".basket-container")
+var dropdown = document.querySelector(".dropdown-content");
+icon.onclick = (e) => {
+    if (!dropdown.classList.contains("show")) {
+        dropdown.classList.add("show")
+    } else {
+        dropdown.classList.remove("show")
+    }
+}
+
+let header = document.querySelector("header");
+header.addEventListener("click", (e) => {
+    if (e.target.className === "remove-item") {
+        console.log("deleted");
+    }
+})
