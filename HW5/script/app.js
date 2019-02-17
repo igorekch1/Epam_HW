@@ -56,11 +56,11 @@ function destroyWrapper() {
 
 function find(array, value) {
     for (var i = 0; i < array.length; i++) {
-      if (array[i].name == value) return i;
+        if (array[i].name == value) return i;
     }
-  
+
     return -1;
-  }
+}
 
 //Choosing an option - ascending or descending
 function checkRadio() {
@@ -97,7 +97,7 @@ function mySort(arr, by) {
         alert("Выберите вид сортировки (по убыванию / по возрастанию)")
 }
 
-function calcData(condition, data, name){
+function calcData(condition, data, name) {
     let sum = 0;
     if (condition === "price") {
         data.map(x => {
@@ -118,9 +118,56 @@ function calcData(condition, data, name){
             currentObj["calories"] = sum;
         }
     }
-    
+
     return sum;
 }
+
+// ------------------------------------------
+// Creating Modal for adding a new pizza
+modal_newPizza = createElem("div", "modal-new-pizza", wrapper);
+let modal_content_new = createElem("div", "modal-content-new-pizza", modal_newPizza);
+createElem("div", "modal-ingredients", modal_newPizza, "<strong>Состав:</strong>");
+createElem("span", "close", modal_content_new, "&times");
+let pizzaForm = createElem("form", "pizza-form", modal_content_new);
+let newPizzaImage = createElem("div", "new-pizza-image", pizzaForm);
+let image = createElem("img", "pizza-image", newPizzaImage);
+let newPizzaName = createElem("div", "new-pizza-name", pizzaForm);
+createElem("div", "modal-label", newPizzaName, "<strong>Название:</strong>");
+newPizzaName.style = "margin-top: 20px;";
+let modalInput = createElem("input", "modal-input", newPizzaName);
+modalInput.type = "text";
+let newPizzaIngredients = createElem("div", "new-pizza-ingredients", pizzaForm);
+createElem("div", "modal-label", newPizzaIngredients, "<strong>Выберите ингридиенты:</strong>");
+let select = createElem("select", "modal-select", newPizzaIngredients);
+ingredientsArr.map(x => {
+    createElem("option", "ingredient", select, x);
+});
+// Filereader API for inserting an image
+let fileSelector = createElem("input", "choose-file", pizzaForm);
+fileSelector.type = 'file';
+
+let fileReader = new FileReader();
+
+fileSelector.onchange = function handleFiles(event) {
+    fileReader.readAsDataURL(event.target.files[0]);
+    newPicture = `./images/${event.target.files[0].name}`;
+    fileReader.onload = function (event) {
+        image.src = event.target.result;
+    }
+}
+
+createElem("button", "btn-create", pizzaForm, "Добавить");
+
+// Creating Modal for editing
+modal = createElem("div", "modal", wrapper);
+let modal_content = createElem("div", "modal-content", modal);
+createElem("span", "close", modal_content, "&times");
+createElem("div", "modal-title", modal_content, "<strong>Состав:</strong>");
+textArea = createElem("textarea", "edit-field", modal_content);
+textArea.setAttribute("placeholder", "Edit here...");
+textArea.setAttribute("cols", "30");
+textArea.setAttribute("rows", "5");
+// ------------------------------------------
 
 function createGrid(arr, ingredientItem) {
     //removing all items from container
@@ -136,53 +183,8 @@ function createGrid(arr, ingredientItem) {
         createElem("option", "", filterSelect, x);
     });
 
-    // Creating Modal for editing
-    modal = createElem("div", "modal", wrapper);
-    let modal_content = createElem("div", "modal-content", modal);
-    createElem("span", "close", modal_content, "&times");
-    createElem("div", "modal-title", modal_content, "<strong>Состав:</strong>");
-    textArea = createElem("textarea", "edit-field", modal_content);
-    textArea.setAttribute("placeholder", "Edit here...");
-    textArea.setAttribute("cols", "30");
-    textArea.setAttribute("rows", "5");
-
     // create a new pizza button
-    createElem("button", "btn-newPizza", wrapper, "Добавить новую пиццу");
-
-    // Creating Modal for adding a new pizza
-    modal_newPizza = createElem("div", "modal-new-pizza", wrapper);
-    let modal_content_new = createElem("div", "modal-content-new-pizza", modal_newPizza);
-    createElem("div", "modal-ingredients", modal_newPizza);
-    createElem("span", "close", modal_content_new, "&times");
-    let pizzaForm = createElem("form", "pizza-form", modal_content_new);
-    let newPizzaImage = createElem("div", "new-pizza-image", pizzaForm);
-    let image = createElem("img", "pizza-image", newPizzaImage);
-    let newPizzaName = createElem("div", "new-pizza-name", pizzaForm);
-    createElem("div", "modal-label", newPizzaName, "<strong>Название:</strong>");
-    newPizzaName.style = "margin-top: 20px;";
-    let modalInput = createElem("input", "modal-input", newPizzaName);
-    modalInput.type = "text";
-    let newPizzaIngredients = createElem("div", "new-pizza-ingredients", pizzaForm);
-    createElem("div", "modal-label", newPizzaIngredients, "<strong>Выберите ингридиенты:</strong>");
-    let select = createElem("select", "modal-select", newPizzaIngredients);
-    ingredientsArr.map(x => {
-        createElem("option", "ingredient", select, x);
-    });
-    // TODO: MAKE DELEGATIONG FOR FILESELECTOR
-    let fileSelector = createElem("input", "choose-file", pizzaForm);
-    fileSelector.type = 'file';
-
-    let fileReader = new FileReader();
-
-    fileSelector.onchange = function handleFiles( event ) {
-        fileReader.readAsDataURL ( event.target.files [0] );
-        newPicture = `./images/${event.target.files[0].name}`;
-        fileReader.onload = function ( event ) {
-            image.src = event.target.result;
-        }
-    }
-
-    createElem("button", "btn-create", pizzaForm, "Добавить");
+    // createElem("button", "btn-newPizza", wrapper, "Добавить новую пиццу");
 
     let pizza_cards = createElem("div", "pizza-cards", pizza_container);
     for (let pizza of arr) {
@@ -222,6 +224,7 @@ function createList(arr) {
 
     //removing class to sylize as list
     pizza_container.classList.remove("pizza-container");
+    pizza_container.classList.add("pizza-container_2");
     createElem("hr", "", pizza_container);
     createElem("div", "", pizza_container, "<strong>Отсортировать по:</strong>");
     // sort select for ingredients
@@ -268,7 +271,7 @@ function createList(arr) {
 function findIngred(ingred) {
     let tmpIng = ingred.trim().split(", ");
     for (let x of tmpIng) {
-        if (!allIngredients.hasOwnProperty(x)) 
+        if (!allIngredients.hasOwnProperty(x))
             return false;
     }
     return true;
@@ -293,15 +296,12 @@ wrapper.addEventListener("click", (e) => {
         currentConsist = target.parentNode.querySelector(".ingredients");
         currentCalories = target.parentNode.querySelector(".calories");
         currentPrice = target.parentNode.querySelector(".price");
-        currentName = target.parentNode.querySelector(".name")
-        ;
+        currentName = target.parentNode.querySelector(".name");
     } else if (target.className === "close") {
         modal.style.display = "none";
         modal_newPizza.style.display = "none";
     } else if (target.className === "modal") {
         modal.style.display = "none";
-    } else if (target.className === "modal-new-pizza") {
-        modal_newPizza.style.display = "none";
     } else if (target.className === "btn-newPizza") {
         modal_newPizza.style.display = "flex";
     } else if (target.className === "btn-buy") {
@@ -310,7 +310,6 @@ wrapper.addEventListener("click", (e) => {
         let calories = target.parentNode.querySelector(".calories").textContent;
         let price = target.parentNode.querySelector(".price").textContent;
         sum.innerHTML = `${Number(sum.innerHTML) + Number(price)}`;
-        console.log(sum)
         let pizza = {
             name,
             ingredients,
@@ -322,32 +321,53 @@ wrapper.addEventListener("click", (e) => {
         // changing counter value on the basket
         counter.innerHTML = `${Number(counter.innerHTML) + 1}`;
         // create block of order in the basket
-        let basketElem = createElem("div",`basket-element_${number}`, myDropdown);
+        let basketElem = createElem("div", `basket-element_${number}`, myDropdown);
         createElem("span", "baskter-element-name", basketElem, name);
         createElem("span", "baskter-element-price", basketElem, `${price} грн`);
         createElem("span", "remove-item", basketElem, "&times");
-
+        alert(`Пицца ${name} добавлена в корзину !!!`);
     } else if (target.className === "btn-create") {
         e.preventDefault();
         // Creating a new pizza card and pushing to our arrays
         if (newName && newIngredients.length !== 0) {
             let pizzaCreated = {
-                name : newName,
-                ingredients : newIngredients,
-                imgSrc : newPicture || "./images/pizza1.png"
+                name: newName,
+                ingredients: newIngredients,
+                imgSrc: newPicture || "./images/pizza1.png"
             };
             pizzaMenu.unshift(pizzaCreated);
             staticArray.unshift(pizzaCreated);
             modal_newPizza.style.display = "none";
             createGrid(staticArray, null);
+            alert(`Создано !!!`);
         } else {
             alert("Заполните все поля !!!");
         }
-    } 
-        // TODO: EVENT ON WRAPPER, BUT IT'S IN HEADER
-        // else if (target.classList.contains("icon") || target.classList.contains("basket-container")) {
-        // console.log("yes") }
-         else {
+    } else if (target.className === "remove-item") {
+        // removing item from web page
+        let itemToRemove = target.parentNode;
+        itemToRemove.parentNode.removeChild(itemToRemove);
+        // removing item from localstorage and updating sum of the order on the web page
+        let rmvFromStorage = itemToRemove.className.split("_")[1];
+        let removedItemPrice = JSON.parse(localStorage.getItem(`order_${rmvFromStorage}`)).price;
+        localStorage.removeItem(`order_${rmvFromStorage}`);
+        sum.innerHTML = `${Number(sum.innerHTML) - Number(removedItemPrice)}`;
+        // changing counter value on the basket
+        counter.innerHTML = `${Number(counter.innerHTML) - 1}`;
+    } else if (target.classList.contains("icon") || target.classList.contains("basket-container")) {
+        if (!dropdown.classList.contains("show")) {
+            dropdown.classList.add("show")
+        } else {
+            dropdown.classList.remove("show")
+        }
+    } else if (target.className === "btn-order") {
+        if (sum.innerHTML === "0") {
+            alert("Корзина пуста!!!");
+        } else {
+            alert(`Оформление заказа на сумму: ${sum.innerHTML}грн.\nЗдесь вы должны ввести свои данные и бла бла бла ...`);
+        }
+        dropdown.classList.remove("show");
+    } else {
         // checking if our target is not "pizza-flipper" -> up to the parentnode
         while (!target.classList.contains("pizza-flipper")) {
             target = target.parentNode;
@@ -362,7 +382,7 @@ wrapper.addEventListener("click", (e) => {
         } else {
             target.classList.remove("clicked");
         }
-         
+
     }
 });
 
@@ -370,57 +390,31 @@ wrapper.addEventListener("change", (e) => {
     let target = e.target;
     if (target.className === "filter-select" &&
         target.tagName === "SELECT") {
-            createGrid(staticArray, target.value);
+        createGrid(staticArray, target.value);
     } else if (target.className === "sort-select" &&
         target.tagName === "SELECT") {
-            selectedName = target.options[target.selectedIndex].value;
+        selectedName = target.options[target.selectedIndex].value;
     } else if (target.tagName === "TEXTAREA" &&
         target.className === "edit-field") {
-            let tmpArr, targArr;
-            // check if the ingredient exists 
-            findIngred(target.value) ? (
-                // clearing the array in order to push a new one
-                tmpArr = staticArray[find(staticArray, currentName.innerHTML)].ingredients,
-                tmpArr.length = 0,
-                targArr = target.value.trim().split(", "),
-                tmpArr.push(...targArr),
-                currentConsist.innerHTML = target.value
-            ) : (
-                alert("Такого ингредиент нет в меню !!!")
-            ); 
-            currentPrice.innerHTML = calcData("price", currentConsist.innerHTML.split(", "));
-            currentCalories.innerHTML = calcData("calories", currentConsist.innerHTML.split(", "));
+        let tmpArr, targArr;
+        // check if the ingredient exists 
+        findIngred(target.value) ? (
+            // clearing the array in order to push a new one
+            tmpArr = staticArray[find(staticArray, currentName.innerHTML)].ingredients,
+            tmpArr.length = 0,
+            targArr = target.value.trim().split(", "),
+            tmpArr.push(...targArr),
+            currentConsist.innerHTML = target.value
+        ) : (
+            alert("Такого ингредиент нет в меню !!!")
+        );
+        currentPrice.innerHTML = calcData("price", currentConsist.innerHTML.split(", "));
+        currentCalories.innerHTML = calcData("calories", currentConsist.innerHTML.split(", "));
     } else if (target.className === "modal-input") {
         newName = target.value
     } else if (target.className === "modal-select") {
         let modal_ingredients = document.querySelector(".modal-ingredients");
         createElem("div", "new_ingredient", modal_ingredients, target.options[target.selectedIndex].value);
         newIngredients.push(target.options[target.selectedIndex].value);
-    }
-});
-
-
-icon.onclick = (e) => {
-    console.log(e.target.classList.contains("icon") || e.target.classList.contains("basket-container"))
-    if (!dropdown.classList.contains("show")) {
-        dropdown.classList.add("show")
-    } else {
-        dropdown.classList.remove("show")
-    }
-}
-
-let header = document.querySelector("header");
-header.addEventListener("click", (e) => {
-    if (e.target.className === "remove-item") {
-        // removing item from web page
-        let itemToRemove = e.target.parentNode;
-        itemToRemove.parentNode.removeChild(itemToRemove);
-        // removing item from localstorage and updating sum of the order on the web page
-        let rmvFromStorage = itemToRemove.className.split("_")[1];
-        let removedItemPrice = JSON.parse(localStorage.getItem(`order_${rmvFromStorage}`)).price;
-        localStorage.removeItem(`order_${rmvFromStorage}`);
-        sum.innerHTML = `${Number(sum.innerHTML) - Number(removedItemPrice)}`;
-        // changing counter value on the basket
-        counter.innerHTML = `${Number(counter.innerHTML) - 1}`;
     }
 });
