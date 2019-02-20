@@ -97,7 +97,8 @@ header .dropdown-content div {
     justify-content: space-between;
 }
 
-header .dropdown-content .order {
+header .dropdown-content .order,
+header .dropdown-content .clear {
     justify-content: center;
 }
 
@@ -285,14 +286,23 @@ button.edit-ing {
     background-color: #555555;
 }
 
-button.btn-order {
-    background-color: #0fa80f;
-    padding: 10px 25px;
+button.btn-order,
+button.btn-clear {
+    /* width: 200px; */
+    padding: 10px 15px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 500;
     color: #ffffff;
     letter-spacing: 0.05em;
+}
+
+button.btn-order {
+    background-color: #0fa80f;
+}
+
+button.btn-clear {
+    background-color: #b91313;
 }
 
 button.btn-buy,

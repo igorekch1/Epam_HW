@@ -17,10 +17,11 @@ let ingredientsArr = [],
     currentCalories,
     newName,
     newIngredients = [],
+    orderedPizza = [],
+    staticArray = [],
+    basketElements = [],
     newPicture,
     number = 0;
-
-let staticArray = Array.from(pizzaMenu);
 
 function fillIngredients(arr) {
     for (let pizza of pizzaMenu) {
@@ -56,7 +57,9 @@ function destroyWrapper() {
 
 function find(array, value) {
     for (var i = 0; i < array.length; i++) {
-        if (array[i].name == value) return i;
+        if (array[i].name == value) {
+            return i;
+        }
     }
 
     return -1;
@@ -269,12 +272,20 @@ function createList(arr) {
 };
 
 function findIngred(ingred) {
-    let tmpIng = ingred.trim().split(", ");
+    let tmpIng = ingred.split(", ");
+    tmpIng = tmpIng.map(x => x.trim());
     for (let x of tmpIng) {
         if (!allIngredients.hasOwnProperty(x))
             return false;
     }
     return true;
+}
+
+function findById(arr, id) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === id) return i;
+    }
+    return -1;
 }
 
 wrapper.addEventListener("click", (e) => {
@@ -311,27 +322,35 @@ wrapper.addEventListener("click", (e) => {
         let price = target.parentNode.querySelector(".price").textContent;
         sum.innerHTML = `${Number(sum.innerHTML) + Number(price)}`;
         let pizza = {
+            id: ++number,
             name,
             ingredients,
             calories,
             price
         }
-        // saving pizza in localstorage
-        localStorage.setItem(`order_${++number}`, JSON.stringify(pizza));
+        if (localStorage.getItem("orderedPizza")) {
+            orderedPizza = JSON.parse(localStorage.getItem("orderedPizza"));
+            orderedPizza.push(pizza);
+            localStorage.setItem("orderedPizza", JSON.stringify(orderedPizza));
+        } else {
+            orderedPizza.push(pizza);
+            localStorage.setItem("orderedPizza", JSON.stringify(orderedPizza));
+        }
         // changing counter value on the basket
-        counter.innerHTML = `${Number(counter.innerHTML) + 1}`;
+        counter.innerHTML = number;
         // create block of order in the basket
-        let basketElem = createElem("div", `basket-element_${number}`, myDropdown);
-        createElem("span", "baskter-element-name", basketElem, name);
-        createElem("span", "baskter-element-price", basketElem, `${price} грн`);
+        let basketElem = createElem("div", `basket-element basket-element_${number}`, myDropdown);
+        createElem("span", "basket-element-name", basketElem, name);
+        createElem("span", "basket-element-price", basketElem, `${price} грн`);
         createElem("span", "remove-item", basketElem, "&times");
+        basketElements.push(basketElem);
         alert(`Пицца ${name} добавлена в корзину !!!`);
     } else if (target.className === "btn-create") {
         e.preventDefault();
         // Creating a new pizza card and pushing to our arrays
         if (newName && newIngredients.length !== 0) {
             let pizzaCreated = {
-                name: newName,
+                name: `"${newName.charAt(0).toUpperCase() + newName.substr(1)}"`,
                 ingredients: newIngredients,
                 imgSrc: newPicture || "./images/pizza1.png"
             };
@@ -340,20 +359,30 @@ wrapper.addEventListener("click", (e) => {
             modal_newPizza.style.display = "none";
             createGrid(staticArray, null);
             alert(`Создано !!!`);
+            // reset 
+            let modal_ingredients = document.querySelector(".modal-ingredients");
+            modal_ingredients.innerHTML = "";
+            let modal_input = document.querySelector(".modal-input");
+            modal_input.value = "";
+            let pizzaImg = document.querySelector(".new-pizza-image").querySelector("img");
+            pizzaImg.src = "";
+            newName = "";
         } else {
             alert("Заполните все поля !!!");
         }
     } else if (target.className === "remove-item") {
         // removing item from web page
+        basketElements.splice(basketElements.indexOf(target.parentNode), 1);
         let itemToRemove = target.parentNode;
         itemToRemove.parentNode.removeChild(itemToRemove);
         // removing item from localstorage and updating sum of the order on the web page
-        let rmvFromStorage = itemToRemove.className.split("_")[1];
-        let removedItemPrice = JSON.parse(localStorage.getItem(`order_${rmvFromStorage}`)).price;
-        localStorage.removeItem(`order_${rmvFromStorage}`);
-        sum.innerHTML = `${Number(sum.innerHTML) - Number(removedItemPrice)}`;
+        orderedPizza = JSON.parse(localStorage.getItem("orderedPizza"));
+        let rmvFromStorage = findById(orderedPizza,Number(itemToRemove.className.split("_")[1]));
+        sum.innerHTML = `${Number(sum.innerHTML) - Number(orderedPizza[`${rmvFromStorage}`].price)}`;
+        orderedPizza.splice(`${rmvFromStorage}`,1);
+        localStorage.setItem("orderedPizza",JSON.stringify(orderedPizza));
         // changing counter value on the basket
-        counter.innerHTML = `${Number(counter.innerHTML) - 1}`;
+        counter.innerHTML = --number;
     } else if (target.classList.contains("icon") || target.classList.contains("basket-container")) {
         if (!dropdown.classList.contains("show")) {
             dropdown.classList.add("show")
@@ -364,9 +393,35 @@ wrapper.addEventListener("click", (e) => {
         if (sum.innerHTML === "0") {
             alert("Корзина пуста!!!");
         } else {
+            basketElements.map(elem => {
+                target.parentNode.parentNode.removeChild(elem);
+            });
+            // reset
+            basketElements = [];
+            counter.innerHTML = "0";
+            orderedPizza = [];
+            number = 0;
+            localStorage.removeItem("orderedPizza");
             alert(`Оформление заказа на сумму: ${sum.innerHTML}грн.\nЗдесь вы должны ввести свои данные и бла бла бла ...`);
+            sum.innerHTML = "0";
         }
         dropdown.classList.remove("show");
+    } else if (target.className === "btn-clear") {
+        if (sum.innerHTML === "0") {
+            alert("В козине ничего нет...");
+        } else {
+            basketElements.map(elem => {
+                target.parentNode.parentNode.removeChild(elem);
+            });
+            // reset
+            basketElements = [];
+            counter.innerHTML = "0";
+            sum.innerHTML = "0";
+            orderedPizza = [];
+            number = 0;
+            localStorage.removeItem("orderedPizza");
+            alert("Очищено!!!");
+        }
     } else {
         // checking if our target is not "pizza-flipper" -> up to the parentnode
         while (!target.classList.contains("pizza-flipper")) {
@@ -397,14 +452,19 @@ wrapper.addEventListener("change", (e) => {
     } else if (target.tagName === "TEXTAREA" &&
         target.className === "edit-field") {
         let tmpArr, targArr;
+        target.value = target.value.trim();
+        if (target.value.lastIndexOf(",") === target.value.length - 1) {
+            target.value = target.value.slice(0, target.value.lastIndexOf(",")).trim();
+        }
         // check if the ingredient exists 
         findIngred(target.value) ? (
             // clearing the array in order to push a new one
             tmpArr = staticArray[find(staticArray, currentName.innerHTML)].ingredients,
             tmpArr.length = 0,
-            targArr = target.value.trim().split(", "),
+            targArr = target.value.split(","),
+            targArr = targArr.map(x => x.trim()),
             tmpArr.push(...targArr),
-            currentConsist.innerHTML = target.value
+            currentConsist.innerHTML = targArr.join(", ")
         ) : (
             alert("Такого ингредиент нет в меню !!!")
         );
@@ -417,4 +477,32 @@ wrapper.addEventListener("change", (e) => {
         createElem("div", "new_ingredient", modal_ingredients, target.options[target.selectedIndex].value);
         newIngredients.push(target.options[target.selectedIndex].value);
     }
+});
+
+window.addEventListener("load", (e) => {
+    if (localStorage.getItem("orderedPizza")) {
+        tmpOrderedPizza = JSON.parse(localStorage.getItem("orderedPizza"));
+        number = tmpOrderedPizza.length;
+        counter.innerHTML = number;
+        tmpOrderedPizza.map(order => {
+            let basketElem = createElem("div", `basket-element basket-element_${order.id}`, myDropdown);
+            createElem("span", "basket-element-name", basketElem, order.name);
+            createElem("span", "basket-element-price", basketElem, `${order.price} грн`);
+            createElem("span", "remove-item", basketElem, "&times");
+            sum.innerHTML = Number(sum.innerHTML) + Number(order.price);
+            orderedPizza.push(order);
+            basketElements.push(basketElem); 
+        }); 
+    }
+
+    if (localStorage.getItem("pizzaMenu")) {
+        let loadedPizzaMenu = JSON.parse(localStorage.getItem("pizzaMenu"));
+        pizzaMenu = Array.from(loadedPizzaMenu);
+    }
+
+    staticArray = Array.from(pizzaMenu);
+});
+
+window.addEventListener("beforeunload", () => {
+    localStorage.setItem("pizzaMenu", JSON.stringify(pizzaMenu));
 });
