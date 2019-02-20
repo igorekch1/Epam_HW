@@ -186,9 +186,6 @@ function createGrid(arr, ingredientItem) {
         createElem("option", "", filterSelect, x);
     });
 
-    // create a new pizza button
-    // createElem("button", "btn-newPizza", wrapper, "Добавить новую пиццу");
-
     let pizza_cards = createElem("div", "pizza-cards", pizza_container);
     for (let pizza of arr) {
         //check if pizza contains such an ingredient, true --> display
@@ -406,6 +403,9 @@ wrapper.addEventListener("click", (e) => {
             sum.innerHTML = "0";
         }
         dropdown.classList.remove("show");
+    } else if (target.className === "remove-ing") {
+        target.parentNode.parentNode.removeChild(target.parentNode);
+        newIngredients.splice(newIngredients.indexOf(`${target.parentNode.children[0].innerHTML}`), 1);
     } else if (target.className === "btn-clear") {
         if (sum.innerHTML === "0") {
             alert("В козине ничего нет...");
@@ -474,7 +474,9 @@ wrapper.addEventListener("change", (e) => {
         newName = target.value
     } else if (target.className === "modal-select") {
         let modal_ingredients = document.querySelector(".modal-ingredients");
-        createElem("div", "new_ingredient", modal_ingredients, target.options[target.selectedIndex].value);
+        let ing_wrapper = createElem("div", "ing-wrapper", modal_ingredients);
+        createElem("span", "new_ingredient", ing_wrapper, target.options[target.selectedIndex].value);
+        createElem("span", "remove-ing", ing_wrapper, "&times");
         newIngredients.push(target.options[target.selectedIndex].value);
     }
 });

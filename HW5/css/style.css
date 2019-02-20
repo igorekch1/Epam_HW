@@ -333,10 +333,6 @@ button:hover{
 .modal {
     padding: 100px;
 }
-
-.modal-new-pizza { 
-    
-}
  
 .modal-content,
 .modal-content-new-pizza,
@@ -376,7 +372,11 @@ button:hover{
 }
 
 .modal-ingredients {
-    width: 15%;
+    width: 20%;
+}
+
+.ing-wrapper {
+    position: relative;
 }
 
 .modal-content .modal-title {
@@ -422,6 +422,20 @@ textarea {
     resize: none;
     outline: none;
     border: 1px solid #999;
+}
+
+.remove-ing {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.remove-ing:hover {
+    cursor: pointer;
+    color: #000000;
 }
 
 /* ANIMATION */
